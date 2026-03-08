@@ -1,124 +1,25 @@
-﻿<div class="row">
+﻿@model List<GetTourDayPlanDto>
+<div class="row">
     <div class="col-lg-8">
         <div class="planing-content-tour">
             <h3 class="title-plan">Tur Plan :</h3>
-            <div class="tour-planing-section flex">
-                <div class="number-box flex-five">01</div>
-                <div class="content-box">
-                    <h5 class="title">Day 1: Arrive in Zürich, Switzerland</h5>
-                    <p class="des">
-                        We’ll meet at 4 p.m. at our hotel in Luzern
-                        (Lucerne) for a “Welcome to Switzerland”
-                        meeting. Then we’ll take a meandering evening walk
-                        through Switzerland’s most
-                        charming lakeside town, and get acquainted with one
-                        another over dinner we've
-                        focused on improving our funct together. Sleep in Luzern
-                        (2 nights). No bus. Walk
-                    </p>
+            @foreach (var item in Model)
+            {
+                <div class="tour-planing-section flex">
+                    <div class="number-box flex-five">@item.DayNumber</div>
+                    <div class="content-box">
+                        <h5 class="title">Gün @item.DayNumber: @item.Title</h5>
+                        <p class="des">
+                            @item.Description
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div class="tour-planing-section flex">
-                <div class="number-box flex-five">02</div>
-                <div class="content-box">
-                    <h5 class="title">
-                        Day 2: Zürich–Biel/BienneNeuchâtel–Geneva
-                    </h5>
-                    <p class="des mb-10">
-                        We’ll meet at 4 p.m. at our hotel in
-                        Luzern (Lucerne) for a “Welcome to Switzerland”
-                        meeting. Then we’ll take a meandering evening walk
-                        through Switzerland’s most
-                        charming lakeside town, and get acquainted with one
-                        another over
-                    </p>
-                    <ul class="listing-des">
-                        <li>
-                            <p>View the City Walls</p>
-                        </li>
-                        <li>
-                            <p>Hiking in the forest</p>
-                        </li>
-                        <li>
-                            <p>Discover the famous view point “The Lark”</p>
-                        </li>
-                        <li>
-                            <p>Sunset on the cruise</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="tour-planing-section flex">
-                <div class="number-box flex-five">03</div>
-                <div class="content-box">
-                    <h5 class="title">Day 3: Enchanting Engelberg</h5>
-                    <p class="des mb-22">
-                        We’ll meet at 4 p.m. at our hotel in
-                        Luzern (Lucerne) for a “Welcome to Switzerland”
-                        meeting. Then we’ll take a meandering evening walk
-                        through Switzerland’s most
-                        charming lakeside town, and get acquainted with one
-                        another over
-                    </p>
-                    <ul class="listing-icon">
-                        <li class="flex-three">
-                            <i class="icon-10"></i>
-                            <p>
-                                Praesent vulputate at enim sit amet mattis
-                                lobortis ante pulvinar at diam
-                            </p>
-                        </li>
-                        <li class="flex-three">
-                            <i class="icon-10"></i>
-                            <p>
-                                Donec ut lobortis ante, non lobortis ante
-                                imperdiet est volutpat in diam erat
-                            </p>
-                        </li>
-                        <li class="flex-three">
-                            <i class="icon-10"></i>
-                            <p>
-                                Donec ut lobortis ante, non lobortis ante
-                                imperdiet est volutpat in diam erat
-                            </p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="tour-planing-section flex">
-                <div class="number-box flex-five">04</div>
-                <div class="content-box">
-                    <h5 class="title">Day 4: Arrive in Zürich, Switzerland</h5>
-                    <p class="des mb-25">
-                        We’ll meet at 4 p.m. at our hotel in
-                        Luzern (Lucerne) for a “Welcome to Switzerland”
-                        meeting. Then we’ll take a meandering evening walk
-                        through Switzerland
-                    </p>
-                    <ul class="listing-clude">
-                        <li class="flex-three">
-                            <i class="icon-Vector-7"></i>
-                            <p>Pick and Drop Services</p>
-                        </li>
-                        <li class="flex-three">
-                            <i class="icon-Vector-7"></i>
-                            <p>1 Meal Per Day</p>
-                        </li>
-                        <li class="flex-three">
-                            <i class="icon-Vector-7"></i>
-                            <p>Cruise Dinner & Music Event</p>
-                        </li>
-                        <li class="flex-three">
-                            <i class="icon-Vector-7"></i>
-                            <p>Visit 7 Best Places in the City With Group</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            }
+
 
         </div>
     </div>
     @await Component.InvokeAsync("_TourRightSidebarComponentPartial")
 
-   
+
 </div>

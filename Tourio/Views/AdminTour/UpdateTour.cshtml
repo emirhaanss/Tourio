@@ -728,7 +728,25 @@
                         <div class="char-counter" id="titleCounter">0 / 100</div>
                         <span asp-validation-for="Title" class="validation-msg" style="display:block;"></span>
                     </div>
-
+                    <!-- Lokasyon -->
+                    <div class="mb-4">
+                        <label class="form-label-custom" for="Location">
+                            Lokasyon <span class="required">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="bi bi-type input-icon"></i>
+                            <input asp-for="Location"
+                                   id="location"
+                                   class="form-control-custom with-icon"
+                                   placeholder="Örn: Kapadokya / Nevşehir"
+                                   maxlength="100"
+                                   autocomplete="off"
+                                   data-original="@Model.Location" />
+                        </div>
+                        <div class="char-counter" id="titleCounter">0 / 100</div>
+                        <span asp-validation-for="Location" class="validation-msg" style="display:block;"></span>
+                    </div>
+                   
                     <!-- Açıklama -->
                     <div class="mb-0">
                         <label class="form-label-custom" for="Description">

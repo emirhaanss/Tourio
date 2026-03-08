@@ -11,5 +11,14 @@
         public int Capacity { get; set; }
         public decimal Price { get; set; }
         public bool IsStatus { get; set; }
+        public string Location { get; set; }
+        public List<UpdateTourDayPlanDto> Days { get; set; } = new List<UpdateTourDayPlanDto>();
+    }
+
+    public class UpdateTourDayPlanDto
+    {
+        public int DayNumber { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace Tourio.Mapping
     {
         public GeneralMapping()
         {
+
             CreateMap<Category, CreateCategoryDto>().ReverseMap();
             CreateMap<Category, GetCategoryByIdDto>().ReverseMap();
             CreateMap<Category, ResultCategoryDto>().ReverseMap();
@@ -20,12 +21,16 @@ namespace Tourio.Mapping
             CreateMap<Tour, ResultTourDto>().ReverseMap();
             CreateMap<Tour, UpdateTourDto>().ReverseMap();
 
+            CreateMap<TourDayPlan, GetTourDayPlanDto>().ReverseMap();
+            CreateMap<TourDayPlan, ResultTourDayPlanDto>().ReverseMap();
+            CreateMap<TourDayPlan, UpdateTourDayPlanDto>().ReverseMap();
+            CreateMap<TourDayPlan, CreateTourDayPlanDto>().ReverseMap();
+
             CreateMap<Review, CreateReviewDto>().ReverseMap();
             CreateMap<Review, GetReviewByIdDto>().ReverseMap();
             CreateMap<Review, ResultReviewDto>().ReverseMap();
             CreateMap<Review, UpdateReviewDto>().ReverseMap();
             CreateMap<Review, ResultReviewByTourIdDto>().ReverseMap();
-
         }
     }
 }

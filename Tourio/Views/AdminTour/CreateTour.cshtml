@@ -61,12 +61,9 @@
         }
 
         @@media (max-width: 1100px) {
-            .form-grid
-
-        {
-            grid-template-columns: 1fr;
-        }
-
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* ─── Form Cards ─────────────────────────────────────── */
@@ -121,6 +118,11 @@
         .fci-yellow {
             background: #fef9c3;
             color: #854d0e;
+        }
+
+        .fci-orange {
+            background: #fff7ed;
+            color: #c2410c;
         }
 
         .form-card-title {
@@ -741,18 +743,83 @@
             margin: 6px 0 20px;
         }
 
+        /* ─── Day Plan ───────────────────────────────────────── */
+        .day-plan-item {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 14px;
+            transition: border-color .2s;
+        }
+
+            .day-plan-item:last-child {
+                margin-bottom: 0;
+            }
+
+            .day-plan-item:focus-within {
+                border-color: var(--accent);
+            }
+
+        .day-plan-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .day-plan-badge {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .day-plan-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .day-plan-body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #fff;
+        }
+
+        .day-plan-empty {
+            text-align: center;
+            padding: 32px 20px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+            .day-plan-empty i {
+                font-size: 28px;
+                color: #cbd5e1;
+                display: block;
+                margin-bottom: 8px;
+            }
+
         /* ─── Responsive ─────────────────────────────────────── */
         @@media (max-width: 576px) {
-            .badge-selector
+            .badge-selector {
+                grid-template-columns: 1fr 1fr;
+            }
 
-        {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .form-card-body {
-            padding: 16px;
-        }
-
+            .form-card-body {
+                padding: 16px;
+            }
         }
     </style>
 }
@@ -815,7 +882,32 @@
                         <div class="char-counter" id="titleCounter">0 / 100</div>
                         <span asp-validation-for="Title" class="validation-msg" style="display:block;"></span>
                     </div>
+                    <!-- Lokasyon -->
+                    <div class="mb-4">
+                        <label class="form-label-custom" for="Location">
+                            Lokasyon <span class="required">*</span>
+                        </label>
 
+                        <div class="input-wrapper">
+                            <i class="bi bi-geo-alt input-icon"></i>
+
+                            <input asp-for="Location"
+                                   id="Location"
+                                   class="form-control-custom with-icon"
+                                   placeholder="Örn: Kapadokya / Nevşehir"
+                                   maxlength="120"
+                                   autocomplete="off" />
+                        </div>
+
+                        <p class="field-hint">
+                            <i class="bi bi-info-circle"></i>
+                            Turun gerçekleşeceği şehir veya bölge
+                        </p>
+
+                        <span asp-validation-for="Location"
+                              class="validation-msg"
+                              style="display:block;"></span>
+                    </div>
                     <!-- Açıklama -->
                     <div class="mb-0">
                         <label class="form-label-custom" for="Description">
@@ -958,6 +1050,25 @@
                     </p>
                     <span asp-validation-for="CoverImageUrl" class="validation-msg" style="display:block;"></span>
 
+                </div>
+            </div>
+
+            <!-- ── Günlük Plan ────────────────────────────────────── -->
+            <div class="form-card">
+                <div class="form-card-header">
+                    <div class="form-card-icon fci-orange">
+                        <i class="bi bi-calendar3"></i>
+                    </div>
+                    <div>
+                        <p class="form-card-title">Günlük Plan</p>
+                        <p class="form-card-subtitle">Her gün için başlık ve açıklama</p>
+                    </div>
+                </div>
+                <div class="form-card-body" id="dayPlanContainer">
+                    <div class="day-plan-empty" id="dayPlanEmpty">
+                        <i class="bi bi-calendar-x"></i>
+                        Tur süresi belirlendiğinde günlük plan alanları burada görünecek.
+                    </div>
                 </div>
             </div>
 
@@ -1135,6 +1246,97 @@
             val = Math.min(max, Math.max(min, val + delta));
             input.value = val;
             updateProgress();
+            if (id === 'DayCount') renderDayPlans(val);
+        }
+
+        // ── Day Plan Renderer ──────────────────────────────────────────────
+        function renderDayPlans(count) {
+            const container = document.getElementById('dayPlanContainer');
+            const emptyMsg  = document.getElementById('dayPlanEmpty');
+
+            // Mevcut gün planı input değerlerini sakla
+            const existing = {};
+            container.querySelectorAll('.day-plan-item').forEach(item => {
+                const idx   = item.dataset.day;
+                const title = item.querySelector(`[name="Days[${idx}].Title"]`);
+                const desc  = item.querySelector(`[name="Days[${idx}].Description"]`);
+                if (title) existing[idx] = { title: title.value, desc: desc ? desc.value : '' };
+            });
+
+            // Temizle (empty mesajı hariç)
+            container.querySelectorAll('.day-plan-item').forEach(el => el.remove());
+
+            if (!count || count < 1) {
+                emptyMsg.style.display = '';
+                updateProgress();
+                return;
+            }
+
+            emptyMsg.style.display = 'none';
+
+            for (let i = 0; i < count; i++) {
+                const prev = existing[i] || { title: '', desc: '' };
+
+                const item = document.createElement('div');
+                item.className = 'day-plan-item';
+                item.dataset.day = i;
+
+                item.innerHTML = `
+                    <div class="day-plan-header">
+                        <div class="day-plan-badge">${i + 1}</div>
+                        <span class="day-plan-label">${i + 1}. Gün</span>
+                    </div>
+                    <div class="day-plan-body">
+                        <input type="hidden" name="Days[${i}].DayNumber" value="${i + 1}" />
+
+                        <div>
+                            <label class="form-label-custom" for="day-title-${i}">
+                                Başlık <span class="required">*</span>
+                            </label>
+                            <input type="text"
+                                   id="day-title-${i}"
+                                   name="Days[${i}].Title"
+                                   class="form-control-custom day-plan-input"
+                                   placeholder="Örn: Varış ve Şehir Turu"
+                                   maxlength="100"
+                                   autocomplete="off"
+                                   value="${escapeHtml(prev.title)}" />
+                        </div>
+
+                        <div>
+                            <label class="form-label-custom" for="day-desc-${i}">
+                                Açıklama <span class="required">*</span>
+                            </label>
+                            <textarea id="day-desc-${i}"
+                                      name="Days[${i}].Description"
+                                      class="form-control-custom day-plan-input"
+                                      placeholder="Bu günde yapılacak aktiviteleri açıklayın…"
+                                      maxlength="500"
+                                      rows="3">${escapeHtml(prev.desc)}</textarea>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(item);
+
+                // Remove invalid class on input
+                item.querySelectorAll('.form-control-custom').forEach(el => {
+                    el.addEventListener('input', () => {
+                        el.classList.remove('is-invalid');
+                        updateProgress();
+                    });
+                });
+            }
+
+            updateProgress();
+        }
+
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
         }
 
         // ── Image preview ──────────────────────────────────────────────────
@@ -1192,20 +1394,26 @@
 
         function updateProgress() {
             let filled = 0;
-            const total = trackedFields.length + 2; // +DayCount +Capacity (always have value)
+            const dayCount = parseInt(document.getElementById('DayCount').value) || 0;
+            const capacity = parseInt(document.getElementById('Capacity').value) || 0;
+
+            // +2 for DayCount and Capacity, +2*dayCount for each day's title+desc
+            const total = trackedFields.length + 2 + (dayCount * 2);
 
             trackedFields.forEach(id => {
                 const el = document.getElementById(id);
                 if (el && el.value.trim().length > 0) filled++;
             });
 
-            // DayCount and Capacity always count as filled since they have default values
-            const dayCount = parseInt(document.getElementById('DayCount').value) || 0;
-            const capacity = parseInt(document.getElementById('Capacity').value) || 0;
             if (dayCount >= 1) filled++;
             if (capacity >= 1) filled++;
 
-            const pct = Math.round((filled / total) * 100);
+            // Count filled day plan fields
+            document.querySelectorAll('.day-plan-input').forEach(el => {
+                if (el.value.trim().length > 0) filled++;
+            });
+
+            const pct = Math.round((filled / Math.max(total, 1)) * 100);
             progressBar.style.width = pct + '%';
             progressPct.textContent = pct + '%';
         }
@@ -1215,10 +1423,13 @@
             if (el) el.addEventListener('input', updateProgress);
         });
 
-        document.getElementById('DayCount').addEventListener('input', updateProgress);
-        document.getElementById('Capacity').addEventListener('input', updateProgress);
+        document.getElementById('DayCount').addEventListener('input', function () {
+            const val = parseInt(this.value) || 0;
+            renderDayPlans(val);
+            updateProgress();
+        });
 
-        updateProgress();
+        document.getElementById('Capacity').addEventListener('input', updateProgress);
 
         // ── Client-side validation highlight ──────────────────────────────
         document.getElementById('createTourForm').addEventListener('submit', function (e) {
@@ -1241,6 +1452,16 @@
                 valid = false;
             }
 
+            // Validate day plan fields
+            document.querySelectorAll('.day-plan-item').forEach(item => {
+                item.querySelectorAll('.day-plan-input').forEach(el => {
+                    if (!el.value.trim()) {
+                        el.classList.add('is-invalid');
+                        valid = false;
+                    }
+                });
+            });
+
             if (!valid) {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1255,8 +1476,10 @@
         document.querySelectorAll('.form-control-custom').forEach(el => {
             el.addEventListener('input', () => el.classList.remove('is-invalid'));
         });
+
+        // ── Initial render ─────────────────────────────────────────────────
+        const initialDayCount = parseInt(document.getElementById('DayCount').value) || 1;
+        renderDayPlans(initialDayCount);
+        updateProgress();
     </script>
 }
-
-
-

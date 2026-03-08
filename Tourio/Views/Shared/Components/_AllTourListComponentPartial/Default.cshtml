@@ -5,10 +5,10 @@
             <form action="/" class="tf-my-listing mb-37">
                 <div class="row align-center">
                     <div class="col-sm-5">
-                       <p class="showing">
-    Toplam <span class="text-main">@ViewBag.TotalCount</span> tur arasından 
-    <span class="text-main">@Model.Count</span> tane gösteriliyor
-</p>
+                        <p class="showing">
+                            Toplam <span class="text-main">@ViewBag.TotalCount</span> tur arasından
+                            <span class="text-main">@Model.Count</span> tane gösteriliyor
+                        </p>
                     </div>
                     <div class="col-sm-7  flex-six group-bar-wrap">
                         <div class="listing-all-wrap">
@@ -48,17 +48,14 @@
                     <div class="tour-listing box-sd">
                         <a href="/Tour/TourDetail/@item.TourID" class="tour-listing-image">
                             <div class="badge-top flex-two">
-                                <span class="feature">Featured</span>
-                                <div class="badge-media flex-five">
-                                    <span class="media"><i class="icon-Group-1000002909"></i>5</span>
-                                    <span class="media"><i class="icon-Group-1000002910"></i>2</span>
-                                </div>
+                                <span class="feature">@item.Badge</span>
+                                
                             </div>
                             <img src="@item.CoverImageUrl" alt="Image Listing">
 
                         </a>
                         <div class="tour-listing-content">
-                            <span class="map"><i class="icon-Vector4"></i>United States USA</span>
+                            <span class="map"><i class="icon-Vector4"></i>@item.Location</span>
                             <h3 class="title-tour-list">
                                 <a href="tour-single.html">
 
@@ -101,9 +98,9 @@
                             </div>
                             <div class="flex-two">
                                 <div class="price-box flex-three">
-                                    <p>Fiyat <span class="price-sale">@item.Price</span></p>
+                                    <p>Fiyat: <span class="price-sale">@item.Price$</span></p>
                                     <span class="price">
-                                        @(item.Price + @item.Price * 20 / 100)
+                                        @(item.Price + @item.Price * 20 / 100)$
                                     </span>
                                 </div>
                                 <div class="icon-bookmark">
