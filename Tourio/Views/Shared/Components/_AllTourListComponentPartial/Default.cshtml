@@ -5,7 +5,10 @@
             <form action="/" class="tf-my-listing mb-37">
                 <div class="row align-center">
                     <div class="col-sm-5">
-                        <p class="showing">Gösteriyor <span class="text-main">12</span> of 21 Results</p>
+                       <p class="showing">
+    Toplam <span class="text-main">@ViewBag.TotalCount</span> tur arasından 
+    <span class="text-main">@Model.Count</span> tane gösteriliyor
+</p>
                     </div>
                     <div class="col-sm-7  flex-six group-bar-wrap">
                         <div class="listing-all-wrap">
@@ -43,7 +46,7 @@
                 @foreach (var item in Model)
                 {
                     <div class="tour-listing box-sd">
-                        <a href="tour-single.html" class="tour-listing-image">
+                        <a href="/Tour/TourDetail/@item.TourID" class="tour-listing-image">
                             <div class="badge-top flex-two">
                                 <span class="feature">Featured</span>
                                 <div class="badge-media flex-five">
@@ -51,7 +54,7 @@
                                     <span class="media"><i class="icon-Group-1000002910"></i>2</span>
                                 </div>
                             </div>
-                            <img src="./assets/images/travel-list/1.jpg" alt="Image Listing">
+                            <img src="@item.CoverImageUrl" alt="Image Listing">
 
                         </a>
                         <div class="tour-listing-content">
@@ -113,26 +116,41 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12 ">
+                <div class="col-md-12">
                     <ul class="tf-pagination flex-five mt-20">
-                        <li>
-                            <a class="pages-link" href="#"> <i class="icon-29"></i></a>
-                        </li>
-                        <li>
-                            <a class="pages-link" href="#">1</a>
-                        </li>
-                        <li class="pages-item active" aria-current="page">
-                            <a class="pages-link" href="#">2</a>
-                        </li>
-                        <li><a class="pages-link" href="#">3</a></li>
-                        <li>
-                            <a class="pages-link" href="#"><i class=" icon--1"></i></a>
-                        </li>
-                    </ul>
 
+                        @* 1. GERİ BUTONU: Eğer 1. sayfada değilsek göster *@
+                        @if (ViewBag.CurrentPage > 1)
+                        {
+                            <li>
+                                <a class="pages-link" href="?page=@(ViewBag.CurrentPage - 1)">
+                                    <i class="icon-29"></i>
+                                </a>
+                            </li>
+                        }
+
+                        @* 2. SAYFA NUMARALARI: Toplam sayfa sayısı kadar döner *@
+                        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                        {
+                            <li class="@(i == ViewBag.CurrentPage ? "pages-item active" : "")"
+                                @(i == ViewBag.CurrentPage ? "aria-current='page'" : "")>
+                                <a class="pages-link" href="?page=@i">@i</a>
+                            </li>
+                        }
+
+                        @* 3. İLERİ BUTONU: Eğer son sayfada değilsek göster *@
+                        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                        {
+                            <li>
+                                <a class="pages-link" href="?page=@(ViewBag.CurrentPage + 1)">
+                                    <i class="icon--1"></i>
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
                 </div>
             </div>
-        </div>
 
-    </div>
+        </div>
 </section>

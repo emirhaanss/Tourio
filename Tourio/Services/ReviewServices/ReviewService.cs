@@ -42,6 +42,12 @@ namespace Tourio.Services.ReviewServices
             return _mapper.Map<GetReviewByIdDto>(value);
         }
 
+        public async Task<List<ResultReviewByTourIdDto>> GetReviewsByTourId(string id)
+        {
+            var values = await _reviewCollection.Find(x => x.TourId == id).ToListAsync();
+            return _mapper.Map<List<ResultReviewByTourIdDto>>(values);
+        }
+
         public async Task UpdateReviewAsync(UpdateReviewDto updateReviewDto)
         {
             var value = _mapper.Map<Review>(updateReviewDto);

@@ -12,20 +12,15 @@ namespace Tourio.Controllers
         {
             _tourService = tourService;
         }
-        [HttpGet]
-        public IActionResult CreateTour()
-        {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> CreateTour(CreateTourDto createTourDto)
-        {
-            await _tourService.CreateTourAsync(createTourDto);
-            return RedirectToAction("TourList");
-        }
+        
         public IActionResult TourList()
         {
             return View();
+        }
+        public async Task<IActionResult> TourDetail(string id)
+        {
+            var tour = await _tourService.GetTourByIdAsync(id);
+            return View(tour);
         }
     }
 }

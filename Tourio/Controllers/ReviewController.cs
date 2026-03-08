@@ -24,5 +24,10 @@ namespace Tourio.Controllers
             await _reviewService.CreateReviewAsync(createReview);
             return RedirectToAction("ReviewList");
         }
+        public async Task<IActionResult> GetReviewByTourId(string id)
+        {
+            var values = await _reviewService.GetReviewsByTourId(id);
+            return View(values);
+        }
     }
 }
