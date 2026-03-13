@@ -1,0 +1,117 @@
+﻿@model Tourio.Dtos.ReviewDtos.CreateReviewDto
+
+<style>
+    .modern-review-card {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 35px;
+        box-shadow: 0 15px 45px rgba(0,0,0,0.05);
+        border: 1px solid #f1f4f2;
+    }
+
+    /* Yıldız Seçme Sistemi */
+    .rating-area {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+        gap: 8px;
+        padding: 20px;
+        background: #fdfdfd;
+        border-radius: 18px;
+    }
+
+        .rating-area input {
+            display: none;
+        }
+
+        .rating-area label {
+            font-size: 35px;
+            color: #e9ecef;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+            .rating-area input:checked ~ label,
+            .rating-area label:hover,
+            .rating-area label:hover ~ label {
+                color: #ffc107;
+            }
+
+    .rating-label {
+        font-size: 11px;
+        font-weight: 800;
+        color: #adb5bd;
+        text-transform: uppercase;
+        text-align: center;
+        display: block;
+    }
+
+    .compact-input {
+        border: 1px solid #e9ecef;
+        border-radius: 14px;
+        padding: 14px 18px;
+        font-size: 14px;
+        background: #f8f9fa;
+        width: 100%;
+        transition: 0.3s;
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, #26b6a6 0%, #1f9689 100%);
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 14px;
+        font-weight: 700;
+        width: 100%;
+        margin-top: 15px;
+    }
+</style>
+
+<div class="modern-review-card">
+    <h5 class="mb-4" style="font-weight: 800; color: #1a1a1a;">Deneyiminizi Paylaşın</h5>
+
+    <form asp-controller="Review" asp-action="CreateReview" method="post">
+
+        <input type="hidden" asp-for="TourId" />
+
+        <input type="hidden" asp-for="ReviewDate" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+
+
+
+        <div class="row g-3">
+            <div class="col-12">
+                <label class="rating-label mb-1 text-start">Adınız Soyadınız</label>
+                <input asp-for="NameSurname" class="compact-input" placeholder="Adınız Soyadınız" required />
+            </div>
+
+            <div class="col-12">
+                <label class="rating-label mb-1 text-start">Yorumunuz</label>
+                <textarea asp-for="Detail" rows="4" class="compact-input" placeholder="Yorumunuzu buraya yazın..." required></textarea>
+            </div>
+            <div class="rating-container mb-4">
+                <span class="rating-label mb-2">Tura Puanınız</span>
+                <div class="rating-area">
+                    <input type="radio" id="star5" asp-for="Score" value="5" required />
+                    <label for="star5" class="bi bi-star-fill"></label>
+
+                    <input type="radio" id="star4" asp-for="Score" value="4" />
+                    <label for="star4" class="bi bi-star-fill"></label>
+
+                    <input type="radio" id="star3" asp-for="Score" value="3" />
+                    <label for="star3" class="bi bi-star-fill"></label>
+
+                    <input type="radio" id="star2" asp-for="Score" value="2" />
+                    <label for="star2" class="bi bi-star-fill"></label>
+
+                    <input type="radio" id="star1" asp-for="Score" value="1" />
+                    <label for="star1" class="bi bi-star-fill"></label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <i class="bi bi-send me-2"></i>Değerlendirmeyi Gönder
+            </button>
+        </div>
+    </form>
+</div>

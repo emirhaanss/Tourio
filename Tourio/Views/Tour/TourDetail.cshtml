@@ -87,9 +87,10 @@
                             </div>
                           
                             @await Component.InvokeAsync("_TourLocationComponentPartial")
-                           
-                           @await Component.InvokeAsync("_TourReviewsComponentPartial")
-                            @await Component.InvokeAsync("_TourImageComponentPartial")
+
+                            @await Component.InvokeAsync("_TourReviewsComponentPartial", new { id = Model.TourID })
+                            @await Component.InvokeAsync("_ReviewCommentComponentPartial", new { tourId = Model.TourID })
+
                         </div>
                     </div>
                 </div>

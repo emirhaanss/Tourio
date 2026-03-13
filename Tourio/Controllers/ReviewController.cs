@@ -20,9 +20,9 @@ namespace Tourio.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateReview(CreateReviewDto createReview)
         {
-            createReview.Status = false;
+            createReview.Status = true;
             await _reviewService.CreateReviewAsync(createReview);
-            return RedirectToAction("ReviewList");
+            return RedirectToAction("TourDetail", "Tour", new { id = createReview.TourId });
         }
         public async Task<IActionResult> GetReviewByTourId(string id)
         {

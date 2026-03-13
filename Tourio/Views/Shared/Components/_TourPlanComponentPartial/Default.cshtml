@@ -1,25 +1,114 @@
 ﻿@model List<GetTourDayPlanDto>
+
 <div class="row">
     <div class="col-lg-8">
         <div class="planing-content-tour">
-            <h3 class="title-plan">Tur Plan :</h3>
-            @foreach (var item in Model)
-            {
-                <div class="tour-planing-section flex">
-                    <div class="number-box flex-five">@item.DayNumber</div>
-                    <div class="content-box">
-                        <h5 class="title">Gün @item.DayNumber: @item.Title</h5>
-                        <p class="des">
-                            @item.Description
-                        </p>
+            <div class="d-flex align-items-center gap-3 mb-4">
+                <div style="width: 4px; height: 25px; background: #26b6a6; border-radius: 10px;"></div>
+                <h3 class="title-plan m-0" style="font-weight: 800; color: #1a1a1a;">Tur Planı</h3>
+            </div>
+
+            <div class="itinerary-wrapper">
+                @foreach (var item in Model)
+                {
+                    <div class="tour-plan-item-modern mb-4">
+                        <div class="plan-header d-flex align-items-center gap-3 p-3">
+                            <div class="day-badge">
+                                <span class="label">GÜN</span>
+                                <span class="number">@item.DayNumber</span>
+                            </div>
+                            <h5 class="plan-title m-0">@item.Title</h5>
+                        </div>
+                        <div class="plan-body p-3 pt-0">
+                            <div class="plan-line-container">
+                                <div class="vertical-line"></div>
+                                <p class="plan-des ms-4 mb-0">
+                                    @item.Description
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            }
-
-
+                }
+            </div>
         </div>
     </div>
-    @await Component.InvokeAsync("_TourRightSidebarComponentPartial")
 
-
+    <div class="col-lg-4">
+        @await Component.InvokeAsync("_TourRightSidebarComponentPartial")
+    </div>
 </div>
+
+<style>
+    /* Tur Planı Modern Kart Stili */
+    .tour-plan-item-modern {
+        background: #ffffff;
+        border-radius: 20px;
+        border: 1px solid #f1f4f2;
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+        .tour-plan-item-modern:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-color: #26b6a6;
+        }
+
+    /* Gün Rozeti Tasarımı */
+    .day-badge {
+        background: #26b6a6;
+        color: white;
+        min-width: 60px;
+        height: 60px;
+        border-radius: 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 5px 15px rgba(38, 182, 166, 0.2);
+    }
+
+        .day-badge .label {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .day-badge .number {
+            font-size: 20px;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+    .plan-title {
+        font-weight: 700;
+        color: #1a1a1a;
+        font-size: 17px;
+    }
+
+    /* Açıklama ve Dikey Çizgi */
+    .plan-line-container {
+        position: relative;
+        padding-left: 15px;
+    }
+
+    .vertical-line {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom, #26b6a6, #f1f4f2);
+        border-radius: 2px;
+    }
+
+    .plan-des {
+        color: #666;
+        line-height: 1.7;
+        font-size: 14px;
+    }
+
+    /* Sidebar'ın üstten boşluğu için (İsteğe bağlı) */
+    .col-lg-4 {
+        margin-top: 10px;
+    }
+</style>
