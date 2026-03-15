@@ -1,4 +1,5 @@
-﻿<style>
+﻿@model List<ResultTourDto>
+<style>
     /* Genel Sidebar Alanı */
     .side-bar-right {
         /* Kartı daha aşağı indirmek için margin'i artırdık */
@@ -305,31 +306,24 @@
 
     <div class="sidebar-widget">
         <h6 class="block-heading">Son Turlar</h6>
-        <div class="recent-post-list">
-            <div class="list-recent d-flex align-items-center gap-3">
-                <a href="#" class="recent-image">
-                    <img src="./assets/images/blog/re-blog1.jpg" alt="Tour">
-                </a>
-                <div class="recent-info">
-                    <div class="start">
-                        <i class="icon-Star"></i><i class="icon-Star"></i><i class="icon-Star"></i><i class="icon-Star"></i><i class="icon-Star empty"></i>
+        @foreach (var item in Model)
+        {
+            <div class="recent-post-list">
+                <div class="list-recent d-flex align-items-center gap-3">
+                    <a href="#" class="recent-image">
+                        <img src="@item.CoverImageUrl" alt="Tour">
+                    </a>
+                    <div class="recent-info">
+                        <div class="start">
+                            <i class="icon-Star"></i><i class="icon-Star"></i><i class="icon-Star"></i><i class="icon-Star"></i><i class="icon-Star empty"></i>
+                        </div>
+                        <h4 class="title"><a href="#">@item.Title</a></h4>
+                        <p class="m-0" style="font-size: 13px;">@item.Price $ <span class="text-main font-weight-bold">Başlayan fiyatlarla</span></p>
                     </div>
-                    <h4 class="title"><a href="#">Amalfi Kıyıları</a></h4>
-                    <p class="m-0" style="font-size: 13px;">Başlayan <span class="text-main font-weight-bold">$129.00</span></p>
                 </div>
+
             </div>
-            <div class="list-recent d-flex align-items-center gap-3">
-                <a href="#" class="recent-image">
-                    <img src="./assets/images/blog/re-blog2.jpg" alt="Tour">
-                </a>
-                <div class="recent-info">
-                    <div class="start">
-                        <i class="icon-Star"></i><i class="icon-Star"></i><i class="icon-Star"></i><i class="icon-Star"></i><i class="icon-Star"></i>
-                    </div>
-                    <h4 class="title"><a href="#">Paris Şehir Turu</a></h4>
-                    <p class="m-0" style="font-size: 13px;">Başlayan <span class="text-main font-weight-bold">$99.00</span></p>
-                </div>
-            </div>
-        </div>
+        }
+
     </div>
 </div>
