@@ -125,6 +125,93 @@
             color: #c2410c;
         }
 
+        .fci-teal {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+
+        /* ─── Amenities (Olanaklar) ──────────────────────────── */
+        .amenity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .amenity-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .amenity-row .form-control-custom {
+                flex: 1;
+            }
+
+        .btn-amenity-remove {
+            width: 36px;
+            height: 36px;
+            border: 1px solid #fca5a5;
+            background: #fff1f2;
+            color: #dc2626;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            font-size: 14px;
+            transition: background .15s, border-color .15s;
+        }
+
+            .btn-amenity-remove:hover {
+                background: #fee2e2;
+                border-color: #f87171;
+            }
+
+        .btn-amenity-add {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 16px;
+            border: 1px dashed var(--accent);
+            background: #f0f9ff;
+            color: var(--accent);
+            border-radius: 9px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .15s, border-color .15s;
+            width: 100%;
+            justify-content: center;
+        }
+
+            .btn-amenity-add:hover {
+                background: #e0f2fe;
+                border-color: #0ea5e9;
+            }
+
+        .amenity-empty-hint {
+            text-align: center;
+            padding: 18px 0 6px;
+            color: var(--text-muted);
+            font-size: 12.5px;
+        }
+
+            .amenity-empty-hint i {
+                display: block;
+                font-size: 24px;
+                color: #cbd5e1;
+                margin-bottom: 6px;
+            }
+
+        /* ─── Datetime input ─────────────────────────────────── */
+        input[type="datetime-local"].form-control-custom {
+            color-scheme: light;
+            cursor: pointer;
+        }
+
         .form-card-title {
             font-size: 14.5px;
             font-weight: 700;
@@ -811,6 +898,12 @@
                 margin-bottom: 8px;
             }
 
+        /* ─── Sticky Right Column ────────────────────────────── */
+        .right-col-sticky {
+            position: sticky;
+            top: 20px;
+        }
+
         /* ─── Responsive ─────────────────────────────────────── */
         @@media (max-width: 576px) {
             .badge-selector {
@@ -1006,6 +1099,38 @@
                             <span asp-validation-for="Price" class="validation-msg" style="display:block;"></span>
                         </div>
 
+                        <!-- Gidiş Tarihi -->
+                        <div class="col-sm-6">
+                            <label class="form-label-custom" for="DepartureTime">
+                                Gidiş Tarihi <span class="required">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <i class="bi bi-calendar-event input-icon"></i>
+                                <input asp-for="DepartureTime"
+                                       id="DepartureTime"
+                                       class="form-control-custom with-icon"
+                                       type="datetime-local" />
+                            </div>
+                            <p class="field-hint"><i class="bi bi-info-circle"></i> Turun başlangıç tarihi ve saati</p>
+                            <span asp-validation-for="DepartureTime" class="validation-msg" style="display:block;"></span>
+                        </div>
+
+                        <!-- Dönüş Tarihi -->
+                        <div class="col-sm-6">
+                            <label class="form-label-custom" for="ReturnTime">
+                                Dönüş Tarihi <span class="required">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <i class="bi bi-calendar-check input-icon"></i>
+                                <input asp-for="ReturnTime"
+                                       id="ReturnTime"
+                                       class="form-control-custom with-icon"
+                                       type="datetime-local" />
+                            </div>
+                            <p class="field-hint"><i class="bi bi-info-circle"></i> Turun bitiş tarihi ve saati</p>
+                            <span asp-validation-for="ReturnTime" class="validation-msg" style="display:block;"></span>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -1053,6 +1178,31 @@
                 </div>
             </div>
 
+            <!-- ── Tur Olanakları ─────────────────────────────────── -->
+            <div class="form-card">
+                <div class="form-card-header">
+                    <div class="form-card-icon fci-teal">
+                        <i class="bi bi-stars"></i>
+                    </div>
+                    <div>
+                        <p class="form-card-title">Tur Olanakları</p>
+                        <p class="form-card-subtitle">Tura dahil özellikler (WiFi, Klima vb.)</p>
+                    </div>
+                </div>
+                <div class="form-card-body">
+                    <div class="amenity-list" id="amenityList">
+                        <div class="amenity-empty-hint" id="amenityEmpty">
+                            <i class="bi bi-plug"></i>
+                            Henüz olanak eklenmedi. Aşağıdan ekleyin.
+                        </div>
+                    </div>
+                    <button type="button" class="btn-amenity-add" onclick="addAmenity()">
+                        <i class="bi bi-plus-circle"></i>
+                        Olanak Ekle
+                    </button>
+                </div>
+            </div>
+
             <!-- ── Günlük Plan ────────────────────────────────────── -->
             <div class="form-card">
                 <div class="form-card-header">
@@ -1074,7 +1224,7 @@
 
         </div><!-- /left column -->
         <!-- ══ RIGHT COLUMN ═══════════════════════════════════════════ -->
-        <div>
+        <div class="right-col-sticky">
 
             <!-- ── Form Dolum Durumu ───────────────────────────────── -->
             <div class="form-progress">
@@ -1170,17 +1320,6 @@
                 </div>
             </div>
 
-            <!-- ── Kaydet / İptal ─────────────────────────────────── -->
-            <div class="submit-card">
-                <button type="submit" class="btn-submit" id="submitBtn">
-                    <i class="bi bi-check-circle-fill"></i>
-                    Turu Kaydet
-                </button>
-                <a href="/admin/tours" class="btn-cancel-submit">
-                    <i class="bi bi-x-circle me-1"></i> İptal Et
-                </a>
-            </div>
-
             <!-- ── İpuçları ───────────────────────────────────────── -->
             <div class="tips-card">
                 <div class="tips-title">
@@ -1207,6 +1346,17 @@
                     <i class="bi bi-check2-circle"></i>
                     <span>Turu kaydetmeden önce tüm bilgileri kontrol edin.</span>
                 </div>
+            </div>
+
+            <!-- ── Kaydet / İptal ─────────────────────────────────── -->
+            <div class="submit-card">
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <i class="bi bi-check-circle-fill"></i>
+                    Turu Kaydet
+                </button>
+                <a href="/admin/tours" class="btn-cancel-submit">
+                    <i class="bi bi-x-circle me-1"></i> İptal Et
+                </a>
             </div>
 
         </div><!-- /right column -->
@@ -1337,6 +1487,55 @@
                 .replace(/"/g, '&quot;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;');
+        }
+
+        // ── Amenities (Olanaklar) ──────────────────────────────────────────
+        let amenityCount = 0;
+
+        function addAmenity(value) {
+            const list      = document.getElementById('amenityList');
+            const emptyHint = document.getElementById('amenityEmpty');
+            if (emptyHint) emptyHint.style.display = 'none';
+
+            const idx = amenityCount++;
+            const row = document.createElement('div');
+            row.className   = 'amenity-row';
+            row.dataset.idx = idx;
+
+            row.innerHTML = `
+                <input type="text"
+                       name="TourFeatures[${idx}].FeatureName"
+                       class="form-control-custom"
+                       placeholder="Örn: WiFi, Klima, Kahvaltı…"
+                       maxlength="80"
+                       autocomplete="off"
+                       value="${escapeHtml(value || '')}" />
+                <button type="button" class="btn-amenity-remove" onclick="removeAmenity(this)" title="Kaldır">
+                    <i class="bi bi-trash3"></i>
+                </button>
+            `;
+
+            list.appendChild(row);
+            row.querySelector('input').focus();
+            updateProgress();
+        }
+
+        function removeAmenity(btn) {
+            const row  = btn.closest('.amenity-row');
+            const list = document.getElementById('amenityList');
+            row.remove();
+
+            // Reindex remaining amenity inputs
+            list.querySelectorAll('.amenity-row').forEach((r, i) => {
+                r.dataset.idx = i;
+                const input = r.querySelector('input[type="text"]');
+                if (input) input.name = `TourFeatures[${i}].FeatureName`;
+            });
+            amenityCount = list.querySelectorAll('.amenity-row').length;
+
+            const emptyHint = document.getElementById('amenityEmpty');
+            if (amenityCount === 0 && emptyHint) emptyHint.style.display = '';
+            updateProgress();
         }
 
         // ── Image preview ──────────────────────────────────────────────────

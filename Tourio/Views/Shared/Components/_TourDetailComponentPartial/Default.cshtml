@@ -56,23 +56,20 @@
                 </div>
 
                 <div class="expect-wrap mb-70">
-                    <h4 class="title mb-18">What to Expect</h4>
+                    <h4 class="title mb-18">Tur Zamanı</h4>
+
                     <div class="expect flex-three">
-                        <span style="font-weight: 600;">Departure/Return Location</span>
-                        <p>2 Taijichang St, Dongcheng Qu, Beijing Shi, China</p>
+                        <span style="font-weight: 600;">Kalkış Saati</span>
+                        <p>@Model.DepartureTime</p>
                     </div>
                     <div class="expect flex-three">
-                        <span style="font-weight: 600;">Departure Time</span>
-                        <p>Please arrive by 9:15 AM for a departure at 9:30 AM</p>
-                    </div>
-                    <div class="expect flex-three">
-                        <span style="font-weight: 600;">Return Time</span>
-                        <p>Approximately 8:30 PM</p>
+                        <span style="font-weight: 600;">Dönüş Saati</span>
+                        <p>@Model.ReturnTime</p>
                     </div>
                 </div>
             </div>
 
-            @await Component.InvokeAsync("_TourAmenitiesComponentPartial")
+            @await Component.InvokeAsync("_TourAmenitiesComponentPartial", new { tourFeatures = Model.TourFeatures })
         </div>
 
         <div class="col-lg-4">

@@ -31,6 +31,11 @@ namespace Tourio.Mapping
             CreateMap<Review, ResultReviewDto>().ReverseMap();
             CreateMap<Review, UpdateReviewDto>().ReverseMap();
             CreateMap<Review, ResultReviewByTourIdDto>().ReverseMap();
+
+            CreateMap<TourFeature, CreateTourFeatureDto>().ReverseMap();
+            CreateMap<TourFeature, GetTourFeatureDto>().ReverseMap();
+            CreateMap<TourFeature, ResultTourFeatureDto>().ReverseMap();
+            CreateMap<TourFeature, UpdateTourFeatureDto>().ReverseMap();
         }
     }
 }

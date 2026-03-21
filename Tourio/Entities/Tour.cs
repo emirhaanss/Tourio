@@ -17,6 +17,9 @@ namespace Tourio.Entities
         public decimal Price { get; set; }
         public bool IsStatus { get; set; }
         public string Location { get; set; }
+        public DateTime DepartureTime { get; set; }
+        public DateTime ReturnTime { get; set; }
         public List<TourDayPlan> Days { get; set; }
+        public List<TourFeature> TourFeatures { get; set; }
     }
 }

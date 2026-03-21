@@ -12,8 +12,10 @@
         public decimal Price { get; set; }
         public bool IsStatus { get; set; }
         public string Location { get; set; }
-
+        public DateTime DepartureTime { get; set; }
+        public DateTime ReturnTime { get; set; }
         public List<ResultTourDayPlanDto> Days { get; set; }
+        public List<ResultTourFeatureDto> TourFeatures { get; set; }
     }
 
     public class ResultTourDayPlanDto
@@ -21,5 +23,10 @@
         public int DayNumber { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+    }
+    public class ResultTourFeatureDto
+    {
+        public string FeatureName { get; set; }
+
     }
 }
