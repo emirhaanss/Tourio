@@ -1,15 +1,67 @@
-﻿<section class="breadcumb-section">
-    <div class="tf-container">
+﻿<style>
+    .breadcumb-section::before,
+    .breadcumb-section::after {
+        display: none !important;
+        background: none !important;
+        content: none !important;
+    }
+</style>
+
+<section class="breadcumb-section" style="
+    background-image:
+        url('/vitour/assets/images/page/mask-bcrumb.png'),
+        url('/vitour/assets/images/page/background.png') !important;
+    background-color: transparent !important;
+    background-position: bottom center, center center !important;
+    background-size: 100% auto, cover !important;
+    background-repeat: no-repeat !important;
+    position: relative;
+    padding: 180px 0 160px 0; /* Padding'i artırarak alanı genişlettik */
+    margin: 0;
+    width: 100%;
+    min-height: 550px; /* Ekranı daha fazla doldurması için yüksekliği artırdık */
+    display: flex;
+    align-items: center;
+    border: none;
+    z-index: 1;
+">
+    <div class="tf-container" style="z-index: 10; position: relative; width: 100%;">
         <div class="row">
-            <div class="col-lg-12 center z-index1">
-                <h1 class="title"> Güncel Turlar</h1>
-                <ul class="breadcumb-list flex-five">
-                    <li><a href="index.html">Ana Sayfa</a></li>
-                    <li><span>Tur Paketleri</span></li>
+            <div class="col-lg-12 text-center">
+                <span style="color: #00d2ff; text-transform: uppercase; font-weight: 700; letter-spacing: 3px; font-size: 0.9rem; margin-bottom: 15px; display: block; text-shadow: 1px 1px 5px rgba(0,0,0,0.3);">
+                    Hayallerini Planla
+                </span>
+
+                <h1 class="title" style="
+                    color: white !important;
+                    font-size: 5rem; /* Başlığı biraz daha büyüttük */
+                    font-weight: 900;
+                    text-transform: uppercase;
+                    margin-bottom: 20px;
+                    letter-spacing: -2px; /* Daha modern ve sıkı bir görünüm */
+                    text-shadow: 0px 10px 30px rgba(0,0,0,0.5);">
+                    REZERVASYON YAP
+                </h1>
+
+                <div style="width: 80px; height: 4px; background: #00d2ff; margin: 0 auto 25px; border-radius: 2px;"></div> <ul class="breadcumb-list" style="
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 15px;
+                    list-style: none;
+                    padding: 0;
+                    font-weight: 600;
+                    font-size: 1.1rem;
+                    background: rgba(0,0,0,0.1); /* Navigasyonu belirginleştiren hafif fon */
+                    display: inline-flex;
+                    padding: 8px 25px;
+                    border-radius: 50px;
+                    backdrop-filter: blur(5px);">
+                    <li><a href="/Default/Index" style="color: #00d2ff !important; text-decoration: none; transition: 0.3s;">Ana Sayfa</a></li>
+                  
+                    <li style="color: white;">Rezervasyon</li>
                 </ul>
-                <img class="bcrumb-ab" src="/vitour/assets/images/page/mask-bcrumb.png" alt="">
             </div>
         </div>
-
     </div>
 </section>

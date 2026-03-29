@@ -2,6 +2,7 @@ using Microsoft.Extensions.Options;
 using System.Reflection;
 using Tourio.Services.CategoryServices;
 using Tourio.Services.ReviewServices;
+using Tourio.Services.TourBookingServices;
 using Tourio.Services.TourServices;
 using Tourio.Settings;
 
@@ -11,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ITourService, TourService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<ITourBookingService, TourBookingService>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("DatabaseSettingsKey"));

@@ -1,4 +1,4 @@
-﻿@model List<Tourio.Dtos.TourDtos.ResultTourDto>
+﻿@model List<ResultTourDto>
 <section class="archieve-tour">
     <div class="tf-container">
         <div class="listing-list-car-wrap listing-list-car-wrap-grid3">
@@ -116,7 +116,7 @@
                 <div class="col-md-12">
                     <ul class="tf-pagination flex-five mt-20">
 
-                        @* 1. GERİ BUTONU: Eğer 1. sayfada değilsek göster *@
+                    
                         @if (ViewBag.CurrentPage > 1)
                         {
                             <li>
@@ -126,7 +126,7 @@
                             </li>
                         }
 
-                        @* 2. SAYFA NUMARALARI: Toplam sayfa sayısı kadar döner *@
+                       
                         @for (int i = 1; i <= ViewBag.TotalPages; i++)
                         {
                             <li class="@(i == ViewBag.CurrentPage ? "pages-item active" : "")"
@@ -135,7 +135,7 @@
                             </li>
                         }
 
-                        @* 3. İLERİ BUTONU: Eğer son sayfada değilsek göster *@
+                      
                         @if (ViewBag.CurrentPage < ViewBag.TotalPages)
                         {
                             <li>

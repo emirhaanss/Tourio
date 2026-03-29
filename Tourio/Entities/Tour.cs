@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Tourio.Entities
 {
+    [BsonIgnoreExtraElements]
     public class Tour
     {
         [BsonId]

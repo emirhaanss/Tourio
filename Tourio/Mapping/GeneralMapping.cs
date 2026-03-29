@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Tourio.Dtos.CategoryDtos;
 using Tourio.Dtos.ReviewDtos;
+using Tourio.Dtos.TourBookingInformation;
 using Tourio.Dtos.TourDtos;
+using Tourio.Dtos.TourReservationInformationDtos;
 using Tourio.Entities;
 
 namespace Tourio.Mapping
@@ -36,6 +38,10 @@ namespace Tourio.Mapping
             CreateMap<TourFeature, GetTourFeatureDto>().ReverseMap();
             CreateMap<TourFeature, ResultTourFeatureDto>().ReverseMap();
             CreateMap<TourFeature, UpdateTourFeatureDto>().ReverseMap();
+
+            CreateMap<TourBookingInformation, CreateTourBookingInformationDto>().ReverseMap();
+            CreateMap<TourBookingInformation, GetTourBookingInformationByIdDto>().ReverseMap();
+            CreateMap<TourBookingInformation, ResultTourBookingInformationDto>().ReverseMap();
         }
     }
 }
